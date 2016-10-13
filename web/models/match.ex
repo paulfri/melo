@@ -5,8 +5,8 @@ defmodule Melo.Match do
     field :home_score, :integer
     field :away_score, :integer
     field :date, Ecto.Date
-    belongs_to :home, Melo.Home
-    belongs_to :away, Melo.Away
+    belongs_to :home, Melo.Team
+    belongs_to :away, Melo.Team
     belongs_to :venue, Melo.Venue
 
     timestamps()
