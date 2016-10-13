@@ -14,13 +14,14 @@ defmodule Melo.Router do
   end
 
   scope "/", Melo do
-    pipe_through :browser # Use the default browser stack
+    pipe_through :browser
 
     get "/", PageController, :index
   end
 
-  # Other scopes may use custom stacks.
-  # scope "/api", Melo do
-  #   pipe_through :api
-  # end
+  scope "/api", Melo do
+    pipe_through :api
+
+    resources "/teams", TeamController, except: [:new, :edit]
+  end
 end
