@@ -4,6 +4,8 @@ defmodule Melo.Team do
   schema "teams" do
     field :name, :string
     field :location, :string
+    has_many :home_matches, Melo.Match, foreign_key: :home_id
+    has_many :away_matches, Melo.Match, foreign_key: :away_id
 
     timestamps()
   end
