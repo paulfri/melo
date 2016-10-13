@@ -33,7 +33,8 @@ defmodule Melo.Mixfile do
      {:cowboy, "~> 1.0"},
      {:httpoison, "~> 0.9.0"},
      {:floki, "~> 0.10.1"},
-     {:timex, "~> 3.0"}]
+     {:timex, "~> 3.0"},
+     {:poison, "~> 2.2"}]
   end
 
   defp aliases do
