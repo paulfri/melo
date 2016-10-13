@@ -3,8 +3,9 @@ defmodule Melo.MatchController do
 
   alias Melo.Match
 
-  def index(conn, _params) do
-    matches = Repo.all(Match)
+  def index(conn, params) do
+    year = params["year"] || 1996
+    matches = Melo.Scraper.scrape(year)
     render(conn, "index.json", matches: matches)
   end
 

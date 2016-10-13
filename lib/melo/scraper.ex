@@ -5,7 +5,7 @@ defmodule Melo.Scraper do
     |> HTTPoison.get!([], [timeout: :infinity, recv_timeout: :infinity])
     |> get_fixtures
     |> parse_games
-    |> Enum.join("\n")
+    # |> Enum.join("\n")
   end
 
   def build_url(year) do
@@ -33,14 +33,21 @@ defmodule Melo.Scraper do
 
   defp to_csv(game_div, date) do
     home       = game_div |> text(".home_club .club_name")
-    home_score = game_div |> text(".home_club .match_score")
+    home_score = game_div |> text(".home_club .match_score") |> String.to_integer
     away       = game_div |> text(".vs_club   .club_name")
-    away_score = game_div |> text(".vs_club   .match_score")
+    away_score = game_div |> text(".vs_club   .match_score") |> String.to_integer
     [_, venue] = game_div
       |> text(".match_location_competition")
       |> String.split(" / ")
 
-    "#{date},#{home},#{home_score},#{away},#{away_score},#{venue}"
+    # "#{date},#{home},#{home_score},#{away},#{away_score},#{venue}"
+
+    %{home: home,
+      away: away,
+      home_score: home_score,
+      away_score: away_score,
+      date: date,
+      venue: venue}
   end
 
   defp text(content, selector) do
