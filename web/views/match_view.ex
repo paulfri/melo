@@ -15,7 +15,6 @@ defmodule Melo.MatchView do
       away: match.away.name,
       home_score: match.home_score,
       away_score: match.away_score,
-      date: match.date,
-      venue: match.venue.name}
+      date: match.date}
   end
 end

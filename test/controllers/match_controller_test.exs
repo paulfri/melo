@@ -22,8 +22,7 @@ defmodule Melo.MatchControllerTest do
       "away" => match.away,
       "home_score" => match.home_score,
       "away_score" => match.away_score,
-      "date" => match.date,
-      "venue" => match.venue}
+      "date" => match.date}
   end
 
   test "renders page not found when id is nonexistent", %{conn: conn} do

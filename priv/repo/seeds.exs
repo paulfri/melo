@@ -1,11 +1,8 @@
-# Script for populating the database. You can run it as:
+# Imports seed data from Postgres dump file.
+# To regenerate seed data:
 #
-#     mix run priv/repo/seeds.exs
-#
-# Inside the script, you can read and write to any of your
-# repositories directly:
-#
-#     Melo.Repo.insert!(%Melo.SomeModel{})
-#
-# We recommend using the bang functions (`insert!`, `update!`
-# and so on) as they will fail if something goes wrong.
+# pg_dump --column-inserts --exclude-table=schema_migrations --data-only melo_dev > priv/repo/seeds.sql
+
+file = Application.app_dir(:melo, "priv/repo/seeds.sql")
+
+Mix.shell.cmd("psql --dbname=melo_#{Mix.env} --file=#{file}")

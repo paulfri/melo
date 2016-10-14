@@ -7,7 +7,6 @@ defmodule Melo.Match do
     field :date, Ecto.Date
     belongs_to :home, Melo.Team
     belongs_to :away, Melo.Team
-    belongs_to :venue, Melo.Venue
 
     timestamps()
   end

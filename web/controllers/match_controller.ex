@@ -4,7 +4,7 @@ defmodule Melo.MatchController do
   alias Melo.Match
 
   def index(conn, params) do
-    query = from(m in Match, preload: [:home, :away, :venue])
+    query = from(m in Match, preload: [:home, :away])
 
     query = filter_date(query, {
       Map.get(params, "year"),

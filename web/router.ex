@@ -22,8 +22,7 @@ defmodule Melo.Router do
   scope "/api", Melo do
     pipe_through :api
 
-    resources "/matches", MatchController, except: [:new, :edit]
-    resources "/teams", TeamController, except: [:new, :edit]
-    resources "/venues", VenueController, except: [:new, :edit]
+    resources "/matches", MatchController, only: [:index, :show]
+    resources "/teams", TeamController, only: [:index, :show]
   end
 end

@@ -5,7 +5,6 @@ defmodule Melo.Scraper do
     |> HTTPoison.get!([], [timeout: :infinity, recv_timeout: :infinity])
     |> get_fixtures
     |> parse_games
-    # |> Enum.join("\n")
   end
 
   def build_url(year) do
@@ -39,8 +38,6 @@ defmodule Melo.Scraper do
     [_, venue] = game_div
       |> text(".match_location_competition")
       |> String.split(" / ")
-
-    # "#{date},#{home},#{home_score},#{away},#{away_score},#{venue}"
 
     %{home: home,
       away: away,
