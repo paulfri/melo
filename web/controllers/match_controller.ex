@@ -12,23 +12,11 @@ defmodule Melo.MatchController do
       Map.get(params, "day")
     })
 
+    query = filter_team(query, Map.get(params, "team"))
+    query = filter_home(query, Map.get(params, "home"))
+    query = filter_away(query, Map.get(params, "away"))
+
     render(conn, "index.json", matches: Repo.all(query))
-  end
-
-  def create(conn, %{"match" => match_params}) do
-    changeset = Match.changeset(%Match{}, match_params)
-
-    case Repo.insert(changeset) do
-      {:ok, match} ->
-        conn
-        |> put_status(:created)
-        |> put_resp_header("location", match_path(conn, :show, match))
-        |> render("show.json", match: match)
-      {:error, changeset} ->
-        conn
-        |> put_status(:unprocessable_entity)
-        |> render(Melo.ChangesetView, "error.json", changeset: changeset)
-    end
   end
 
   def show(conn, %{"id" => id}) do
@@ -36,27 +24,7 @@ defmodule Melo.MatchController do
     render(conn, "show.json", match: match)
   end
 
-  def update(conn, %{"id" => id, "match" => match_params}) do
-    match = Repo.get!(Match, id)
-    changeset = Match.changeset(match, match_params)
-
-    case Repo.update(changeset) do
-      {:ok, match} ->
-        render(conn, "show.json", match: match)
-      {:error, changeset} ->
-        conn
-        |> put_status(:unprocessable_entity)
-        |> render(Melo.ChangesetView, "error.json", changeset: changeset)
-    end
-  end
-
-  def delete(conn, %{"id" => id}) do
-    match = Repo.get!(Match, id)
-
-    Repo.delete!(match)
-
-    send_resp(conn, :no_content, "")
-  end
+  ###
 
   defp filter_date(query, {year, month, day}) do
     {year, month, day} = cond do
@@ -103,5 +71,29 @@ defmodule Melo.MatchController do
     query
     |> where([m], m.date >= ^start_date)
     |> where([m], m.date <  ^end_date)
+  end
+
+  defp filter_home(query, nil), do: query
+  defp filter_home(query, team) do
+    query
+    |> join(:inner, [m], home in assoc(m, :home))
+    |> where([_, home], home.abbreviation == ^String.upcase(team))
+  end
+
+  defp filter_away(query, nil), do: query
+  defp filter_away(query, team) do
+    query
+    |> join(:inner, [m], away in assoc(m, :away))
+    |> where([_, away], away.abbreviation == ^String.upcase(team))
+  end
+
+  defp filter_team(query, nil), do: query
+  defp filter_team(query, team) do
+    team = String.upcase(team)
+
+    query
+    |> join(:inner, [m], home in assoc(m, :home))
+    |> join(:inner, [m], away in assoc(m, :away))
+    |> where([_, home, away], home.abbreviation == ^team or away.abbreviation == ^team)
   end
 end
