@@ -15,6 +15,7 @@ defmodule Melo.MatchController do
     query = filter_team(query, Map.get(params, "team"))
     query = filter_home(query, Map.get(params, "home"))
     query = filter_away(query, Map.get(params, "away"))
+    query = order(query, Map.get(params, "order", "asc"))
 
     render(conn, "index.json", matches: Repo.all(query))
   end
@@ -96,4 +97,7 @@ defmodule Melo.MatchController do
     |> join(:inner, [m], away in assoc(m, :away))
     |> where([_, home, away], home.abbreviation == ^team or away.abbreviation == ^team)
   end
+
+  defp order(query, "asc"), do: query |> order_by(asc: :date)
+  defp order(query, "desc"), do: query |> order_by(desc: :date)
 end
