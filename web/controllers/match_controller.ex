@@ -3,10 +3,16 @@ defmodule Melo.MatchController do
 
   alias Melo.Match
 
-  def index(conn, _params) do
-    matches = Repo.all from m in Match, preload: [:home, :away, :venue]
+  def index(conn, params) do
+    query = from(m in Match, preload: [:home, :away, :venue])
 
-    render(conn, "index.json", matches: matches)
+    query = filter_date(query, {
+      Map.get(params, "year"),
+      Map.get(params, "month"),
+      Map.get(params, "day")
+    })
+
+    render(conn, "index.json", matches: Repo.all(query))
   end
 
   def create(conn, %{"match" => match_params}) do
@@ -47,10 +53,55 @@ defmodule Melo.MatchController do
   def delete(conn, %{"id" => id}) do
     match = Repo.get!(Match, id)
 
-    # Here we use delete! (with a bang) because we expect
-    # it to always work (and if it does not, it will raise).
     Repo.delete!(match)
 
     send_resp(conn, :no_content, "")
+  end
+
+  defp filter_date(query, {year, month, day}) do
+    {year, month, day} = cond do
+      year && month && day ->
+        {String.to_integer(year), String.to_integer(month), String.to_integer(day)}
+      year && month ->
+        {String.to_integer(year), String.to_integer(month), nil}
+      year ->
+        {String.to_integer(year), nil, nil}
+      true ->
+        {nil, nil, nil}
+    end
+
+    filter_date(query, year, month, day)
+  end
+
+  defp filter_date(query, nil, nil, nil), do: query
+
+  defp filter_date(query, year, nil, nil) do
+    start_date = Ecto.Date.from_erl({year, 1, 1})
+    end_date   = Ecto.Date.from_erl({year + 1, 1, 1})
+
+    query
+    |> apply_date_filter(start_date, end_date)
+  end
+
+  defp filter_date(query, year, month, nil) do
+    start_date = Ecto.Date.from_erl({year, month, 1})
+    end_date   = Ecto.Date.from_erl({year, month + 1, 1})
+
+    query
+    |> apply_date_filter(start_date, end_date)
+  end
+
+  defp filter_date(query, year, month, day) do
+    start_date = Ecto.Date.from_erl({year, month, day})
+    end_date   = Ecto.Date.from_erl({year, month, day + 1})
+
+    query
+    |> apply_date_filter(start_date, end_date)
+  end
+
+  defp apply_date_filter(query, start_date, end_date) do
+    query
+    |> where([m], m.date >= ^start_date)
+    |> where([m], m.date <  ^end_date)
   end
 end
