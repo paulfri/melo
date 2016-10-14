@@ -6,7 +6,7 @@ defmodule Melo.MatchView do
   end
 
   def render("show.json", %{match: match}) do
-    %{matches: render_one(match, Melo.MatchView, "match.json")}
+    %{match: render_one(match, Melo.MatchView, "match.json")}
   end
 
   def render("match.json", %{match: match}) do
