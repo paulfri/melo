@@ -1,6 +1,6 @@
 # MLS Conference Alignments, 1996-present
 
-## 1996-1997
+## 1996
 ### Eastern Conference
 Columbus Crew
 D.C. United
@@ -14,6 +14,9 @@ Dallas Burn
 Kansas City Wizards
 Los Angeles Galaxy
 San Jose Clash
+
+## 1997
+No changes.
 
 ## 1998
 Miami enters in the East; Chicago enters in the West.
@@ -83,7 +86,7 @@ New England Revolution
 ### Western Conference
 Chivas USA
 Colorado Rapids
-Dallas Burn
+FC Dallas
 Los Angeles Galaxy
 Real Salt Lake
 San Jose Earthquakes
