@@ -16,6 +16,80 @@ SET row_security = off;
 SET search_path = public, pg_catalog;
 
 --
+-- Data for Name: seasons; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO seasons (id, year, inserted_at, updated_at) VALUES ('cde1f762-7689-4cdc-9a8a-ececeb089943', 1996, '2016-10-16 14:41:54', '2016-10-16 14:41:54');
+INSERT INTO seasons (id, year, inserted_at, updated_at) VALUES ('b45bb531-e5bd-4661-a5c3-1b99ca200dfa', 1997, '2016-10-16 14:41:54', '2016-10-16 14:41:54');
+INSERT INTO seasons (id, year, inserted_at, updated_at) VALUES ('18e1fd00-2674-4188-ab14-1ef52e8fc202', 1998, '2016-10-16 14:41:54', '2016-10-16 14:41:54');
+INSERT INTO seasons (id, year, inserted_at, updated_at) VALUES ('09f80838-009f-42ac-a7d4-ce85e9ceeaea', 1999, '2016-10-16 14:41:54', '2016-10-16 14:41:54');
+INSERT INTO seasons (id, year, inserted_at, updated_at) VALUES ('6a02484f-936a-452e-be77-60aba4d5ad42', 2000, '2016-10-16 14:41:54', '2016-10-16 14:41:54');
+INSERT INTO seasons (id, year, inserted_at, updated_at) VALUES ('a27c9d84-8135-4b28-a1f5-ff52e3e2ce78', 2001, '2016-10-16 14:41:54', '2016-10-16 14:41:54');
+INSERT INTO seasons (id, year, inserted_at, updated_at) VALUES ('88090554-e74f-413f-a02f-ce89db4d7ee5', 2002, '2016-10-16 14:41:54', '2016-10-16 14:41:54');
+INSERT INTO seasons (id, year, inserted_at, updated_at) VALUES ('961a62e1-6be7-4e2b-b7d4-0a7455177f31', 2003, '2016-10-16 14:41:54', '2016-10-16 14:41:54');
+INSERT INTO seasons (id, year, inserted_at, updated_at) VALUES ('11b48fb7-72ed-4499-9b1f-c6f12f5a9ef9', 2004, '2016-10-16 14:41:54', '2016-10-16 14:41:54');
+INSERT INTO seasons (id, year, inserted_at, updated_at) VALUES ('b351b830-b251-45ac-9525-34e5f08642ff', 2005, '2016-10-16 14:41:54', '2016-10-16 14:41:54');
+INSERT INTO seasons (id, year, inserted_at, updated_at) VALUES ('33130858-95ae-40f1-b459-4ae9e4f24588', 2006, '2016-10-16 14:41:54', '2016-10-16 14:41:54');
+INSERT INTO seasons (id, year, inserted_at, updated_at) VALUES ('37cc4922-49f4-4a87-af3c-e241d148bb51', 2007, '2016-10-16 14:41:54', '2016-10-16 14:41:54');
+INSERT INTO seasons (id, year, inserted_at, updated_at) VALUES ('530786f0-b3c4-442f-aca3-88fe838cd553', 2008, '2016-10-16 14:41:54', '2016-10-16 14:41:54');
+INSERT INTO seasons (id, year, inserted_at, updated_at) VALUES ('395fe075-cc46-4c49-adc3-fc29bbc1a670', 2009, '2016-10-16 14:41:54', '2016-10-16 14:41:54');
+INSERT INTO seasons (id, year, inserted_at, updated_at) VALUES ('44d47ead-05c4-4f38-959d-35b6caba5e6e', 2010, '2016-10-16 14:41:54', '2016-10-16 14:41:54');
+INSERT INTO seasons (id, year, inserted_at, updated_at) VALUES ('f03ac0f8-02ec-4511-b285-22bf88eb3265', 2011, '2016-10-16 14:41:54', '2016-10-16 14:41:54');
+INSERT INTO seasons (id, year, inserted_at, updated_at) VALUES ('8d65a9ae-a229-41e0-9db1-8627cfca85c5', 2012, '2016-10-16 14:41:54', '2016-10-16 14:41:54');
+INSERT INTO seasons (id, year, inserted_at, updated_at) VALUES ('4632ac53-c418-4f7a-be65-30ab9ae126c0', 2013, '2016-10-16 14:41:54', '2016-10-16 14:41:54');
+INSERT INTO seasons (id, year, inserted_at, updated_at) VALUES ('bf9b7b41-560c-4646-914a-064fbcfe9dfd', 2014, '2016-10-16 14:41:54', '2016-10-16 14:41:54');
+INSERT INTO seasons (id, year, inserted_at, updated_at) VALUES ('ba042864-adda-4711-89f5-73a390b635e8', 2015, '2016-10-16 14:41:54', '2016-10-16 14:41:54');
+
+
+--
+-- Data for Name: divisions; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO divisions (id, name, season_id, inserted_at, updated_at) VALUES ('4a3ae473-a98a-4852-bf46-68d21cced47c', 'Eastern Conference', 'cde1f762-7689-4cdc-9a8a-ececeb089943', '2016-10-16 14:41:54', '2016-10-16 14:41:54');
+INSERT INTO divisions (id, name, season_id, inserted_at, updated_at) VALUES ('699b4397-5969-4610-bc87-99d0a08ff17e', 'Western Conference', 'cde1f762-7689-4cdc-9a8a-ececeb089943', '2016-10-16 14:41:54', '2016-10-16 14:41:54');
+INSERT INTO divisions (id, name, season_id, inserted_at, updated_at) VALUES ('aecb2f41-c741-4012-912d-e2377f3167ee', 'Eastern Conference', 'b45bb531-e5bd-4661-a5c3-1b99ca200dfa', '2016-10-16 14:41:54', '2016-10-16 14:41:54');
+INSERT INTO divisions (id, name, season_id, inserted_at, updated_at) VALUES ('37ccdd49-1a1c-4629-87c3-9621db1143e7', 'Western Conference', 'b45bb531-e5bd-4661-a5c3-1b99ca200dfa', '2016-10-16 14:41:54', '2016-10-16 14:41:54');
+INSERT INTO divisions (id, name, season_id, inserted_at, updated_at) VALUES ('c31d88f3-a609-4cdd-a452-93f62eb0cd0f', 'Eastern Conference', '18e1fd00-2674-4188-ab14-1ef52e8fc202', '2016-10-16 14:41:54', '2016-10-16 14:41:54');
+INSERT INTO divisions (id, name, season_id, inserted_at, updated_at) VALUES ('464b1760-a8ea-4cb6-a501-9b81c977781c', 'Western Conference', '18e1fd00-2674-4188-ab14-1ef52e8fc202', '2016-10-16 14:41:54', '2016-10-16 14:41:54');
+INSERT INTO divisions (id, name, season_id, inserted_at, updated_at) VALUES ('5594d2b2-7e64-4806-9d41-8fed6ba05190', 'Eastern Conference', '09f80838-009f-42ac-a7d4-ce85e9ceeaea', '2016-10-16 14:41:54', '2016-10-16 14:41:54');
+INSERT INTO divisions (id, name, season_id, inserted_at, updated_at) VALUES ('b93477fe-d56a-495e-ad99-deeb950dccc2', 'Western Conference', '09f80838-009f-42ac-a7d4-ce85e9ceeaea', '2016-10-16 14:41:54', '2016-10-16 14:41:54');
+INSERT INTO divisions (id, name, season_id, inserted_at, updated_at) VALUES ('6cc709d6-44cf-4462-996a-bb227276dbc3', 'Eastern Division', '6a02484f-936a-452e-be77-60aba4d5ad42', '2016-10-16 14:41:54', '2016-10-16 14:41:54');
+INSERT INTO divisions (id, name, season_id, inserted_at, updated_at) VALUES ('1ce1e454-d6ae-42e8-902c-2dfe9855af45', 'Central Division', '6a02484f-936a-452e-be77-60aba4d5ad42', '2016-10-16 14:41:54', '2016-10-16 14:41:54');
+INSERT INTO divisions (id, name, season_id, inserted_at, updated_at) VALUES ('d4bd04da-7252-4b5b-a98a-d179c8ef5fdb', 'Western Division', '6a02484f-936a-452e-be77-60aba4d5ad42', '2016-10-16 14:41:54', '2016-10-16 14:41:54');
+INSERT INTO divisions (id, name, season_id, inserted_at, updated_at) VALUES ('0056af3b-7712-45d7-9ddf-a17cd2f6329e', 'Eastern Division', 'a27c9d84-8135-4b28-a1f5-ff52e3e2ce78', '2016-10-16 14:41:54', '2016-10-16 14:41:54');
+INSERT INTO divisions (id, name, season_id, inserted_at, updated_at) VALUES ('af97a1fb-e2e1-4a9d-b74f-3604fbd1ae7b', 'Central Division', 'a27c9d84-8135-4b28-a1f5-ff52e3e2ce78', '2016-10-16 14:41:54', '2016-10-16 14:41:54');
+INSERT INTO divisions (id, name, season_id, inserted_at, updated_at) VALUES ('4dd2b841-83d9-4e83-be22-5c83628ad3aa', 'Western Division', 'a27c9d84-8135-4b28-a1f5-ff52e3e2ce78', '2016-10-16 14:41:54', '2016-10-16 14:41:54');
+INSERT INTO divisions (id, name, season_id, inserted_at, updated_at) VALUES ('befba17c-17d6-4695-9867-5be14bd0e2e9', 'Eastern Conference', '88090554-e74f-413f-a02f-ce89db4d7ee5', '2016-10-16 14:41:54', '2016-10-16 14:41:54');
+INSERT INTO divisions (id, name, season_id, inserted_at, updated_at) VALUES ('5ac3c930-8977-4bd6-a692-c68b8b2f0307', 'Western Conference', '88090554-e74f-413f-a02f-ce89db4d7ee5', '2016-10-16 14:41:54', '2016-10-16 14:41:54');
+INSERT INTO divisions (id, name, season_id, inserted_at, updated_at) VALUES ('a02cad7a-8c02-41d1-9381-947c52b96e9b', 'Eastern Conference', '961a62e1-6be7-4e2b-b7d4-0a7455177f31', '2016-10-16 14:41:54', '2016-10-16 14:41:54');
+INSERT INTO divisions (id, name, season_id, inserted_at, updated_at) VALUES ('fd110604-9bd0-4e5e-9de0-5a8a66168786', 'Western Conference', '961a62e1-6be7-4e2b-b7d4-0a7455177f31', '2016-10-16 14:41:54', '2016-10-16 14:41:54');
+INSERT INTO divisions (id, name, season_id, inserted_at, updated_at) VALUES ('7ccb161f-d445-43d0-89e8-5a4d5d79128f', 'Eastern Conference', '11b48fb7-72ed-4499-9b1f-c6f12f5a9ef9', '2016-10-16 14:41:54', '2016-10-16 14:41:54');
+INSERT INTO divisions (id, name, season_id, inserted_at, updated_at) VALUES ('1451dc9d-71db-4ffe-b524-c0f64b5eb36d', 'Western Conference', '11b48fb7-72ed-4499-9b1f-c6f12f5a9ef9', '2016-10-16 14:41:54', '2016-10-16 14:41:54');
+INSERT INTO divisions (id, name, season_id, inserted_at, updated_at) VALUES ('c98cb273-e26e-4a98-8d8d-be6f85669196', 'Eastern Conference', 'b351b830-b251-45ac-9525-34e5f08642ff', '2016-10-16 14:41:54', '2016-10-16 14:41:54');
+INSERT INTO divisions (id, name, season_id, inserted_at, updated_at) VALUES ('0c4f001c-d7e6-45b2-be4e-054ddae6ac35', 'Western Conference', 'b351b830-b251-45ac-9525-34e5f08642ff', '2016-10-16 14:41:54', '2016-10-16 14:41:54');
+INSERT INTO divisions (id, name, season_id, inserted_at, updated_at) VALUES ('c0956243-6836-4123-a73c-cf57321fe4a8', 'Eastern Conference', '33130858-95ae-40f1-b459-4ae9e4f24588', '2016-10-16 14:41:54', '2016-10-16 14:41:54');
+INSERT INTO divisions (id, name, season_id, inserted_at, updated_at) VALUES ('9fe0e3ca-d3b6-4177-bafd-4ea273b5d766', 'Western Conference', '33130858-95ae-40f1-b459-4ae9e4f24588', '2016-10-16 14:41:54', '2016-10-16 14:41:54');
+INSERT INTO divisions (id, name, season_id, inserted_at, updated_at) VALUES ('3b077d63-db26-4600-8716-f67f1cf91efe', 'Eastern Conference', '37cc4922-49f4-4a87-af3c-e241d148bb51', '2016-10-16 14:41:54', '2016-10-16 14:41:54');
+INSERT INTO divisions (id, name, season_id, inserted_at, updated_at) VALUES ('f0571f29-9648-4902-bc16-c402ce71e6fb', 'Western Conference', '37cc4922-49f4-4a87-af3c-e241d148bb51', '2016-10-16 14:41:54', '2016-10-16 14:41:54');
+INSERT INTO divisions (id, name, season_id, inserted_at, updated_at) VALUES ('9504b47c-067f-4d2f-97d4-467f02964e90', 'Eastern Conference', '530786f0-b3c4-442f-aca3-88fe838cd553', '2016-10-16 14:41:54', '2016-10-16 14:41:54');
+INSERT INTO divisions (id, name, season_id, inserted_at, updated_at) VALUES ('a2a255c0-17a4-4992-bcd3-95dde9d8c4a4', 'Western Conference', '530786f0-b3c4-442f-aca3-88fe838cd553', '2016-10-16 14:41:54', '2016-10-16 14:41:54');
+INSERT INTO divisions (id, name, season_id, inserted_at, updated_at) VALUES ('68351fdc-612b-4779-84f0-913f8115b908', 'Eastern Conference', '395fe075-cc46-4c49-adc3-fc29bbc1a670', '2016-10-16 14:41:54', '2016-10-16 14:41:54');
+INSERT INTO divisions (id, name, season_id, inserted_at, updated_at) VALUES ('d07fd7aa-310a-4ec7-9228-360e5a653fc3', 'Western Conference', '395fe075-cc46-4c49-adc3-fc29bbc1a670', '2016-10-16 14:41:54', '2016-10-16 14:41:54');
+INSERT INTO divisions (id, name, season_id, inserted_at, updated_at) VALUES ('fe42a8d8-c748-464c-9126-b79986f0fbb0', 'Eastern Conference', '44d47ead-05c4-4f38-959d-35b6caba5e6e', '2016-10-16 14:41:54', '2016-10-16 14:41:54');
+INSERT INTO divisions (id, name, season_id, inserted_at, updated_at) VALUES ('efea4e0f-b718-4c87-80c2-dcd71c44d23d', 'Western Conference', '44d47ead-05c4-4f38-959d-35b6caba5e6e', '2016-10-16 14:41:54', '2016-10-16 14:41:54');
+INSERT INTO divisions (id, name, season_id, inserted_at, updated_at) VALUES ('c3ce4b45-3b16-4585-b128-352b36814a7a', 'Eastern Conference', 'f03ac0f8-02ec-4511-b285-22bf88eb3265', '2016-10-16 14:41:54', '2016-10-16 14:41:54');
+INSERT INTO divisions (id, name, season_id, inserted_at, updated_at) VALUES ('33760567-bb17-43e6-8aae-7e409808e313', 'Western Conference', 'f03ac0f8-02ec-4511-b285-22bf88eb3265', '2016-10-16 14:41:54', '2016-10-16 14:41:54');
+INSERT INTO divisions (id, name, season_id, inserted_at, updated_at) VALUES ('85c077f8-9f62-4fab-80cc-3352d712740b', 'Eastern Conference', '8d65a9ae-a229-41e0-9db1-8627cfca85c5', '2016-10-16 14:41:54', '2016-10-16 14:41:54');
+INSERT INTO divisions (id, name, season_id, inserted_at, updated_at) VALUES ('6a00d0d2-9304-4ac8-a6ac-b3b19854200b', 'Western Conference', '8d65a9ae-a229-41e0-9db1-8627cfca85c5', '2016-10-16 14:41:54', '2016-10-16 14:41:54');
+INSERT INTO divisions (id, name, season_id, inserted_at, updated_at) VALUES ('772e3d2a-956c-45eb-9901-f1058547b8f6', 'Eastern Conference', '4632ac53-c418-4f7a-be65-30ab9ae126c0', '2016-10-16 14:41:54', '2016-10-16 14:41:54');
+INSERT INTO divisions (id, name, season_id, inserted_at, updated_at) VALUES ('769e938c-7985-4930-9a5a-0e7697cd86ef', 'Western Conference', '4632ac53-c418-4f7a-be65-30ab9ae126c0', '2016-10-16 14:41:54', '2016-10-16 14:41:54');
+INSERT INTO divisions (id, name, season_id, inserted_at, updated_at) VALUES ('be6b908d-f698-42b4-b376-903b0d67511c', 'Eastern Conference', 'bf9b7b41-560c-4646-914a-064fbcfe9dfd', '2016-10-16 14:41:54', '2016-10-16 14:41:54');
+INSERT INTO divisions (id, name, season_id, inserted_at, updated_at) VALUES ('19a041dc-ccac-4476-9118-f5a103b71ec1', 'Western Conference', 'bf9b7b41-560c-4646-914a-064fbcfe9dfd', '2016-10-16 14:41:54', '2016-10-16 14:41:54');
+INSERT INTO divisions (id, name, season_id, inserted_at, updated_at) VALUES ('e2a58fc1-62c4-4fee-873b-5a8b061c44e6', 'Eastern Conference', 'ba042864-adda-4711-89f5-73a390b635e8', '2016-10-16 14:41:54', '2016-10-16 14:41:54');
+INSERT INTO divisions (id, name, season_id, inserted_at, updated_at) VALUES ('ada1dc14-ef30-410e-8d13-c319901379e0', 'Western Conference', 'ba042864-adda-4711-89f5-73a390b635e8', '2016-10-16 14:41:54', '2016-10-16 14:41:54');
+
+
+--
 -- Data for Name: teams; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
