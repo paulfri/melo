@@ -13,8 +13,6 @@ defmodule Melo.TeamView do
     %{id: team.id,
       name: team.name,
       abbreviation: team.abbreviation,
-      location: team.location,
-      year_start: team.year_start,
-      year_end: team.year_end}
+      location: team.location}
   end
 end

@@ -4,7 +4,7 @@ defmodule Melo.MatchController do
   alias Melo.Match
 
   def index(conn, params) do
-    query = from(m in Match, preload: [:home, :away])
+    query = from(m in Match, preload: [home: :team, away: :team])
 
     query = filter_date(query, {
       Map.get(params, "year"),
@@ -93,9 +93,14 @@ defmodule Melo.MatchController do
     team = String.upcase(team)
 
     query
-    |> join(:inner, [m], home in assoc(m, :home))
-    |> join(:inner, [m], away in assoc(m, :away))
-    |> where([_, home, away], home.abbreviation == ^team or away.abbreviation == ^team)
+    |> join(:inner, [m], home_season in assoc(m, :home))
+    |> join(:inner, [m], away_season in assoc(m, :away))
+    |> join(:inner, [m, h, _a], home_team in assoc(h, :team))
+    |> join(:inner, [m, _h, a], away_team in assoc(a, :team))
+    |> where(
+         [_, _h, _a, home_team, away_team],
+         home_team.abbreviation == ^team or away_team.abbreviation == ^team
+       )
   end
 
   defp order(query, "asc"), do: query |> order_by(asc: :date)
