@@ -3,6 +3,7 @@ defmodule Melo.Season do
 
   schema "seasons" do
     field :year, :integer
+    has_many :divisions, Melo.Division
 
     timestamps()
   end
