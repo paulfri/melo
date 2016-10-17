@@ -6,7 +6,6 @@ seed_file = Application.app_dir(:melo, "priv/repo/seeds.sql")
 
 ###
 if System.get_env("MELO_REGENERATE_SEED") do
-  Code.require_file("priv/repo/seed.ex")
   Melo.Seed.run
 
   Mix.shell.cmd("pg_dump --column-inserts --exclude-table=schema_migrations \

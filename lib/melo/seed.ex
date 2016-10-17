@@ -261,8 +261,6 @@ defmodule Melo.Seed do
 
         Enum.each(aliases, fn({abbrev, name}) ->
           abbrev = String.upcase(Atom.to_string(abbrev))
-          team = Melo.Repo.get_by!(Melo.Team, abbreviation: abbrev)
-
           query = Melo.TeamSeason
                   |> join(:inner, [ts], d in assoc(ts, :team))
                   |> join(:inner, [ts, _t], d in assoc(ts, :division))
