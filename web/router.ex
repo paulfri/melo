@@ -14,6 +14,12 @@ defmodule Melo.Router do
   end
 
   scope "/", Melo do
+    pipe_through :api
+
+    get "/status", StatusController, :index
+  end
+
+  scope "/", Melo do
     pipe_through :browser
 
     get "/", PageController, :index

@@ -30,35 +30,4 @@ defmodule Melo.MatchControllerTest do
       get conn, match_path(conn, :show, "11111111-1111-1111-1111-111111111111")
     end
   end
-
-  test "creates and renders resource when data is valid", %{conn: conn} do
-    conn = post conn, match_path(conn, :create), match: @valid_attrs
-    assert json_response(conn, 201)["data"]["id"]
-    assert Repo.get_by(Match, @valid_attrs)
-  end
-
-  test "does not create resource and renders errors when data is invalid", %{conn: conn} do
-    conn = post conn, match_path(conn, :create), match: @invalid_attrs
-    assert json_response(conn, 422)["errors"] != %{}
-  end
-
-  test "updates and renders chosen resource when data is valid", %{conn: conn} do
-    match = Repo.insert! %Match{}
-    conn = put conn, match_path(conn, :update, match), match: @valid_attrs
-    assert json_response(conn, 200)["data"]["id"]
-    assert Repo.get_by(Match, @valid_attrs)
-  end
-
-  test "does not update chosen resource and renders errors when data is invalid", %{conn: conn} do
-    match = Repo.insert! %Match{}
-    conn = put conn, match_path(conn, :update, match), match: @invalid_attrs
-    assert json_response(conn, 422)["errors"] != %{}
-  end
-
-  test "deletes chosen resource", %{conn: conn} do
-    match = Repo.insert! %Match{}
-    conn = delete conn, match_path(conn, :delete, match)
-    assert response(conn, 204)
-    refute Repo.get(Match, match.id)
-  end
 end
