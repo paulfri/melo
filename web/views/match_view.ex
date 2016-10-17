@@ -11,8 +11,8 @@ defmodule Melo.MatchView do
 
   def render("match.json", %{match: match}) do
     %{id: match.id,
-      home: match.home.team.name,
-      away: match.away.team.name,
+      home: Melo.TeamSeason.name(match.home),
+      away: Melo.TeamSeason.name(match.away),
       home_score: match.home_score,
       away_score: match.away_score,
       date: match.date}

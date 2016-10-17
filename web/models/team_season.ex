@@ -19,4 +19,8 @@ defmodule Melo.TeamSeason do
     |> put_assoc(:team, params[:team])
     |> put_assoc(:division, params[:division])
   end
+
+  def name(team_season) do
+    team_season.alias || team_season.team.name
+  end
 end

@@ -4,6 +4,7 @@ defmodule Melo.Seed do
     Melo.Seed.Seasons.run
     Melo.Seed.Divisions.run
     Melo.Seed.TeamSeasons.run
+    Melo.Seed.Aliases.run
     Melo.Seed.Matches.run
   end
 
@@ -249,6 +250,122 @@ defmodule Melo.Seed do
         })
       end)
     end
+  end
+
+  defmodule Aliases do
+    import Ecto.Query
+
+    def run do
+      Enum.each(1996..2015, fn(year) ->
+        aliases = Kernel.apply(Melo.Seed.Aliases, String.to_atom("aliases_#{year}"), [])
+
+        Enum.each(aliases, fn({abbrev, name}) ->
+          abbrev = String.upcase(Atom.to_string(abbrev))
+          team = Melo.Repo.get_by!(Melo.Team, abbreviation: abbrev)
+
+          query = Melo.TeamSeason
+                  |> join(:inner, [ts], d in assoc(ts, :team))
+                  |> join(:inner, [ts, _t], d in assoc(ts, :division))
+                  |> join(:inner, [_ts, _t, d], s in assoc(d, :season))
+                  |> where([_ts, t, _d, _s], t.abbreviation == ^abbrev)
+                  |> where([_ts, _t, _d, s], s.year == ^year)
+
+          team_season = Melo.Repo.one!(query)
+          changeset = Ecto.Changeset.change(team_season, %{alias: name})
+
+          Melo.Repo.update!(changeset)
+        end)
+      end)
+    end
+
+    def aliases_1996 do
+      %{fcd: "Dallas Burn",
+        sje: "San Jose Clash",
+        skc: "Kansas City Wiz",
+        nyr: "New York/New Jersey MetroStars"}
+    end
+
+    def aliases_1997 do
+      %{fcd: "Dallas Burn",
+        sje: "San Jose Clash",
+        skc: "Kansas City Wizards",
+        nyr: "New York/New Jersey MetroStars"}
+    end
+
+    def aliases_1998 do
+      %{fcd: "Dallas Burn",
+       sje: "San Jose Clash",
+       skc: "Kansas City Wizards",
+       nyr: "MetroStars"}
+    end
+
+    def aliases_1999 do
+      %{fcd: "Dallas Burn",
+       sje: "San Jose Clash",
+       skc: "Kansas City Wizards",
+       nyr: "MetroStars"}
+    end
+
+    def aliases_2000 do
+      %{fcd: "Dallas Burn",
+       skc: "Kansas City Wizards",
+       nyr: "MetroStars"}
+    end
+
+    def aliases_2001 do
+      %{fcd: "Dallas Burn",
+       skc: "Kansas City Wizards",
+       nyr: "MetroStars"}
+    end
+
+    def aliases_2002 do
+      %{fcd: "Dallas Burn",
+       skc: "Kansas City Wizards",
+       nyr: "MetroStars"}
+    end
+
+    def aliases_2003 do
+      %{fcd: "Dallas Burn",
+       skc: "Kansas City Wizards",
+       nyr: "MetroStars"}
+    end
+
+    def aliases_2004 do
+      %{fcd: "Dallas Burn",
+       skc: "Kansas City Wizards",
+       nyr: "MetroStars"}
+    end
+
+    def aliases_2005 do
+      %{skc: "Kansas City Wizards",
+       nyr: "MetroStars"}
+    end
+
+    def aliases_2006 do
+      %{skc: "Kansas City Wizards"}
+    end
+
+    def aliases_2007 do
+      %{skc: "Kansas City Wizards"}
+    end
+
+    def aliases_2008 do
+      %{skc: "Kansas City Wizards"}
+    end
+
+    def aliases_2009 do
+      %{skc: "Kansas City Wizards"}
+    end
+
+    def aliases_2010 do
+      %{skc: "Kansas City Wizards"}
+    end
+
+    def aliases_2011, do: %{}
+    def aliases_2012, do: %{}
+    def aliases_2013, do: %{}
+    def aliases_2014, do: %{}
+    def aliases_2015, do: %{}
   end
 
   defmodule Matches do

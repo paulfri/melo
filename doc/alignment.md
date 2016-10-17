@@ -4,7 +4,7 @@
 ### Eastern Conference
 Columbus Crew
 D.C. United
-MetroStars
+New York/New Jersey MetroStars
 New England Revolution
 Tampa Bay Mutiny
 
@@ -16,10 +16,11 @@ Los Angeles Galaxy
 San Jose Clash
 
 ## 1997
-No changes.
+Kansas City Wiz change name to Wizards.
 
 ## 1998
-Miami enters in the East; Chicago enters in the West.
+Miami enters in the East; Chicago enters in the West. MetroStars drop the
+New York/New Jersey identifier.
 
 ## 1999
 No changes.
@@ -125,7 +126,7 @@ No changes.
 
 ## 2015
 Chivas USA folds. Orlando City and New York City enter in the East. Sporting
-Kanasas City and Houston Dynamo move to the West.
+Kansas City and Houston Dynamo move to the West.
 
 ## 2016
 No changes.
