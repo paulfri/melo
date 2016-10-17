@@ -34,7 +34,8 @@ defmodule Melo.Mixfile do
      {:httpoison, "~> 0.9.0"},
      {:floki, "~> 0.10.1"},
      {:timex, "~> 3.0"},
-     {:poison, "~> 2.2"}]
+     {:poison, "~> 2.2"},
+     {:credo, "~> 0.4", only: [:dev, :test]}]
   end
 
   defp aliases do
