@@ -1,6 +1,6 @@
 defmodule Melo.MatchController do
   use Melo.Web, :controller
-
+  alias Ecto.Date
   alias Melo.Match
 
   def index(conn, params) do
@@ -30,7 +30,9 @@ defmodule Melo.MatchController do
   defp filter_date(query, {year, month, day}) do
     {year, month, day} = cond do
       year && month && day ->
-        {String.to_integer(year), String.to_integer(month), String.to_integer(day)}
+        {String.to_integer(year),
+         String.to_integer(month),
+         String.to_integer(day)}
       year && month ->
         {String.to_integer(year), String.to_integer(month), nil}
       year ->
@@ -45,24 +47,24 @@ defmodule Melo.MatchController do
   defp filter_date(query, nil, nil, nil), do: query
 
   defp filter_date(query, year, nil, nil) do
-    start_date = Ecto.Date.from_erl({year, 1, 1})
-    end_date   = Ecto.Date.from_erl({year + 1, 1, 1})
+    start_date = Date.from_erl({year, 1, 1})
+    end_date   = Date.from_erl({year + 1, 1, 1})
 
     query
     |> apply_date_filter(start_date, end_date)
   end
 
   defp filter_date(query, year, month, nil) do
-    start_date = Ecto.Date.from_erl({year, month, 1})
-    end_date   = Ecto.Date.from_erl({year, month + 1, 1})
+    start_date = Date.from_erl({year, month, 1})
+    end_date   = Date.from_erl({year, month + 1, 1})
 
     query
     |> apply_date_filter(start_date, end_date)
   end
 
   defp filter_date(query, year, month, day) do
-    start_date = Ecto.Date.from_erl({year, month, day})
-    end_date   = Ecto.Date.from_erl({year, month, day + 1})
+    start_date = Date.from_erl({year, month, day})
+    end_date   = Date.from_erl({year, month, day + 1})
 
     query
     |> apply_date_filter(start_date, end_date)

@@ -1,14 +1,29 @@
 defmodule Melo.Seed do
+  alias Ecto.Changeset
+  alias Ecto.Multi
+  alias Melo.Repo
+  alias Melo.Division
+  alias Melo.Season
+  alias Melo.Team
+  alias Melo.TeamSeason
+  alias Melo.Seed.Teams
+  alias Melo.Seed.Divisions
+  alias Melo.Seed.Seasons
+  alias Melo.Seed.TeamSeasons
+  alias Melo.Seed.Aliases
+  alias Melo.Seed.Matches
+
   def run do
-    Melo.Seed.Teams.run
-    Melo.Seed.Seasons.run
-    Melo.Seed.Divisions.run
-    Melo.Seed.TeamSeasons.run
-    Melo.Seed.Aliases.run
-    Melo.Seed.Matches.run
+    Teams.run
+    Seasons.run
+    Divisions.run
+    TeamSeasons.run
+    Aliases.run
+    Matches.run
   end
 
   defmodule Teams do
+    @lint {Credo.Check.Readability.MaxLineLength, false}
     def run do
       [
         %{abbreviation: "ATL", name: "Atlanta United FC", location: "Atlanta, GA"},
@@ -39,7 +54,7 @@ defmodule Melo.Seed do
         %{abbreviation: "VAN", name: "Vancouver Whitecaps FC", location: "Vancouver, BC, CA"}
       ]
       |> Enum.map(fn(team) ->
-        Melo.Repo.insert!(%Melo.Team{
+        Repo.insert!(%Team{
           abbreviation: team.abbreviation,
           name: team.name,
           location: team.location
@@ -52,12 +67,12 @@ defmodule Melo.Seed do
     def run do
       1996..2015
       |> Enum.map(fn(year) ->
-        Melo.Season.changeset(%Melo.Season{}, %{year: year})
+        Season.changeset(%Season{}, %{year: year})
       end)
-      |> Enum.reduce(Ecto.Multi.new, fn(changeset, multi) ->
-        Ecto.Multi.insert(multi, changeset.changes.year, changeset)
+      |> Enum.reduce(Multi.new, fn(changeset, multi) ->
+        Multi.insert(multi, changeset.changes.year, changeset)
       end)
-      |> Melo.Repo.transaction
+      |> Repo.transaction
     end
   end
 
@@ -65,42 +80,43 @@ defmodule Melo.Seed do
     def run do
       1996..2015
       |> Enum.map(fn(year) ->
-        season = Melo.Repo.get_by!(Melo.Season, year: year)
+        season = Repo.get_by!(Season, year: year)
 
-        cond do
-          year == 2000 || year == 2001 ->
-            [Melo.Division.changeset(%Melo.Division{}, %{
-              season: season,
-              name: "Eastern Division"
-            }),
-            Melo.Division.changeset(%Melo.Division{}, %{
-              season: season,
-              name: "Central Division"
-            }),
-            Melo.Division.changeset(%Melo.Division{}, %{
-              season: season,
-              name: "Western Division"
-            })]
-          true ->
-            [Melo.Division.changeset(%Melo.Division{}, %{
-              season: season,
-              name: "Eastern Conference"
-            }),
-            Melo.Division.changeset(%Melo.Division{}, %{
-              season: season,
-              name: "Western Conference"
-            })]
+        if year == 2000 || year == 2001 do
+          [Division.changeset(%Division{}, %{
+            season: season,
+            name: "Eastern Division"
+          }),
+          Division.changeset(%Division{}, %{
+            season: season,
+            name: "Central Division"
+          }),
+          Division.changeset(%Division{}, %{
+            season: season,
+            name: "Western Division"
+          })]
+        else
+          [Division.changeset(%Division{}, %{
+            season: season,
+            name: "Eastern Conference"
+          }),
+          Division.changeset(%Division{}, %{
+            season: season,
+            name: "Western Conference"
+          })]
         end
       end)
       |> List.flatten
-      |> Enum.reduce(Ecto.Multi.new, fn(changeset, multi) ->
-        insert_name = "#{changeset.changes.season.data.year}_#{changeset.changes.name}"
+      |> Enum.reduce(Multi.new, fn(changeset, multi) ->
+        year = changeset.changes.season.data.year
+        name = changeset.changes.name
+        insert_name = "#{year}_#{name}"
                       |> String.replace(" ", "")
                       |> Macro.underscore
 
-        Ecto.Multi.insert(multi, String.to_atom(insert_name), changeset)
+        Multi.insert(multi, String.to_atom(insert_name), changeset)
       end)
-      |> Melo.Repo.transaction
+      |> Repo.transaction
     end
   end
 
@@ -194,19 +210,19 @@ defmodule Melo.Seed do
     def west_2017(), do: ["COL", "FCD", "HOU", "LAG", "MIN", "POR", "RSL", "SEA", "SJE", "SKC", "VAN"]
 
     def team(abbr) do
-      Melo.Repo.get_by!(Melo.Team, abbreviation: abbr)
+      Repo.get_by!(Team, abbreviation: abbr)
     end
 
     def season(year) do
-      Melo.Repo.get_by!(Melo.Season, year: year)
+      Repo.get_by!(Season, year: year)
     end
 
     def division(name, season) do
-      Melo.Repo.get_by!(Melo.Division, name: name, season_id: season.id)
+      Repo.get_by!(Division, name: name, season_id: season.id)
     end
 
     def insert(team_season) do
-      Melo.Repo.insert!(Melo.TeamSeason.changeset(%Melo.TeamSeason{}, team_season))
+      Repo.insert!(TeamSeason.changeset(%TeamSeason{}, team_season))
     end
 
     def run do
@@ -226,7 +242,8 @@ defmodule Melo.Seed do
           division("Western Conference", s)}
       end
 
-      Kernel.apply(Melo.Seed.TeamSeasons, String.to_atom("east_#{year}"), [])
+      Melo.Seed.TeamSeasons
+      |> Kernel.apply(String.to_atom("east_#{year}"), [])
       |> Enum.each(fn(abbr) ->
         insert(%{
           team: team(abbr),
@@ -234,7 +251,8 @@ defmodule Melo.Seed do
         })
       end)
 
-      Kernel.apply(Melo.Seed.TeamSeasons, String.to_atom("cent_#{year}"), [])
+      Melo.Seed.TeamSeasons
+      |> Kernel.apply(String.to_atom("cent_#{year}"), [])
       |> Enum.each(fn(abbr) ->
         insert(%{
           team: team(abbr),
@@ -242,7 +260,8 @@ defmodule Melo.Seed do
         })
       end)
 
-      Kernel.apply(Melo.Seed.TeamSeasons, String.to_atom("west_#{year}"), [])
+      Melo.Seed.TeamSeasons
+      |> Kernel.apply(String.to_atom("west_#{year}"), [])
       |> Enum.each(fn(abbr) ->
         insert(%{
           team: team(abbr),
@@ -257,23 +276,35 @@ defmodule Melo.Seed do
 
     def run do
       Enum.each(1996..2015, fn(year) ->
-        aliases = Kernel.apply(Melo.Seed.Aliases, String.to_atom("aliases_#{year}"), [])
-
-        Enum.each(aliases, fn({abbrev, name}) ->
-          abbrev = String.upcase(Atom.to_string(abbrev))
-          query = Melo.TeamSeason
-                  |> join(:inner, [ts], d in assoc(ts, :team))
-                  |> join(:inner, [ts, _t], d in assoc(ts, :division))
-                  |> join(:inner, [_ts, _t, d], s in assoc(d, :season))
-                  |> where([_ts, t, _d, _s], t.abbreviation == ^abbrev)
-                  |> where([_ts, _t, _d, s], s.year == ^year)
-
-          team_season = Melo.Repo.one!(query)
-          changeset = Ecto.Changeset.change(team_season, %{alias: name})
-
-          Melo.Repo.update!(changeset)
-        end)
+        run_year(year)
       end)
+    end
+
+    def run_year(year) do
+      aliases = aliases_for_year(year)
+
+      Enum.each(aliases, fn({abbrev, name}) ->
+        abbrev = String.upcase(Atom.to_string(abbrev))
+        team_season = team_season(abbrev, year)
+        changeset = Changeset.change(team_season, %{alias: name})
+
+        Repo.update!(changeset)
+      end)
+    end
+
+    def team_season(abbrev, year) do
+      query = Melo.TeamSeason
+              |> join(:inner, [ts], d in assoc(ts, :team))
+              |> join(:inner, [ts, _t], d in assoc(ts, :division))
+              |> join(:inner, [_ts, _t, d], s in assoc(d, :season))
+              |> where([_ts, t, _d, _s], t.abbreviation == ^abbrev)
+              |> where([_ts, _t, _d, s], s.year == ^year)
+
+      Repo.one!(query)
+    end
+
+    def aliases_for_year(year) do
+      Kernel.apply(Melo.Seed.Aliases, String.to_atom("aliases_#{year}"), [])
     end
 
     def aliases_1996 do
@@ -367,8 +398,10 @@ defmodule Melo.Seed do
   end
 
   defmodule Matches do
+    alias Mix.Tasks.ImportMatches
+
     def run do
-      Mix.Tasks.Import.run(nil)
+      ImportMatches.run(nil)
     end
   end
 end

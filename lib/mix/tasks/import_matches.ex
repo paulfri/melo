@@ -1,18 +1,21 @@
-defmodule Mix.Tasks.Import do
+defmodule Mix.Tasks.ImportMatches do
+  alias Ecto.Adapters.SQL
+  alias Ecto.Date
   alias Melo.Match
-  alias Melo.TeamSeason
   alias Melo.Repo
-  use Mix.Task
+  alias Melo.Scraper
+  alias Melo.TeamSeason
   import Ecto.Query
+  use Mix.Task
 
   def run(_params) do
     {:ok, _started} = Application.ensure_all_started(:melo)
 
-    Ecto.Adapters.SQL.query(Repo, "truncate table matches")
+    SQL.query(Repo, "truncate table matches")
 
     matches = (1996..2015)
     |> Enum.flat_map(fn(year) ->
-      Melo.Scraper.scrape(year)
+      Scraper.scrape(year)
     end)
 
     Repo.transaction(fn ->
@@ -25,14 +28,15 @@ defmodule Mix.Tasks.Import do
           away: away,
           home_score: match.home_score,
           away_score: match.away_score,
-          date: Ecto.Date.cast!(match.date)
+          date: Date.cast!(match.date)
         })
       end)
     end)
   end
 
   defp team_season(name, date) do
-    year = String.slice(date, 0..3)
+    year = date
+           |> String.slice(0..3)
            |> String.to_integer
 
     query = TeamSeason

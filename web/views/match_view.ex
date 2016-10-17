@@ -1,4 +1,5 @@
 defmodule Melo.MatchView do
+  alias Melo.TeamSeason
   use Melo.Web, :view
 
   def render("index.json", %{matches: matches}) do
@@ -11,8 +12,8 @@ defmodule Melo.MatchView do
 
   def render("match.json", %{match: match}) do
     %{id: match.id,
-      home: Melo.TeamSeason.name(match.home),
-      away: Melo.TeamSeason.name(match.away),
+      home: TeamSeason.name(match.home),
+      away: TeamSeason.name(match.away),
       home_score: match.home_score,
       away_score: match.away_score,
       date: match.date}
