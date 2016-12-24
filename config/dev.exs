@@ -37,7 +37,7 @@ config :phoenix, :stacktrace_depth, 20
 config :melo, Melo.Repo,
   adapter: Ecto.Adapters.Postgres,
   username: "postgres",
-  password: "postgres",
+  password: nil,
   database: "melo_dev",
   hostname: "localhost",
   pool_size: 10

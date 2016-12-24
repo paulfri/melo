@@ -13,7 +13,7 @@ defmodule Mix.Tasks.ImportMatches do
 
     SQL.query(Repo, "truncate table matches")
 
-    matches = (1996..2015)
+    matches = (1996..2016)
     |> Enum.flat_map(fn(year) ->
       Scraper.scrape(year)
     end)

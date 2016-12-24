@@ -65,7 +65,7 @@ defmodule Melo.Seed do
 
   defmodule Seasons do
     def run do
-      1996..2015
+      1996..2016
       |> Enum.map(fn(year) ->
         Season.changeset(%Season{}, %{year: year})
       end)
@@ -78,7 +78,7 @@ defmodule Melo.Seed do
 
   defmodule Divisions do
     def run do
-      1996..2015
+      1996..2016
       |> Enum.map(fn(year) ->
         season = Repo.get_by!(Season, year: year)
 
@@ -226,7 +226,7 @@ defmodule Melo.Seed do
     end
 
     def run do
-      1996..2015 |> Enum.each(&(run_year(&1)))
+      1996..2016 |> Enum.each(&(run_year(&1)))
     end
 
     def run_year(year) do
@@ -275,7 +275,7 @@ defmodule Melo.Seed do
     import Ecto.Query
 
     def run do
-      Enum.each(1996..2015, fn(year) ->
+      Enum.each(1996..2016, fn(year) ->
         run_year(year)
       end)
     end
@@ -395,6 +395,7 @@ defmodule Melo.Seed do
     def aliases_2013, do: %{}
     def aliases_2014, do: %{}
     def aliases_2015, do: %{}
+    def aliases_2016, do: %{}
   end
 
   defmodule Matches do
