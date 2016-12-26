@@ -1,0 +1,4 @@
+mkdir -p ./priv/static/js
+mkdir -p ./priv/static/css
+yarn run deploy
+mix phoenix.digest

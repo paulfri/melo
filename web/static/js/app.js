@@ -1,6 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import Melo from './melo'
+import Melo from './Melo'
 
 ReactDOM.render(
   <Melo />,
