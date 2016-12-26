@@ -1,6 +1,7 @@
 import React from 'react'
 import EloTable from './components/EloTable'
 import YearSelect from './components/YearSelect'
+import Navigation from './components/Navigation'
 
 export default class Melo extends React.Component {
   constructor(props) {
@@ -23,27 +24,23 @@ export default class Melo extends React.Component {
 
   render () {
     return (
-      <div className='container'>
-        <div className='row'>
-          <h1 className='column'>Melo</h1>
-        </div>
+      <main>
+        <Navigation />
 
-        <hr />
+        <section className='container elo'>
+          <div className='row'>
+            <h2 className='column column-75'>Elo</h2>
 
-        <div className='row'>
-          <h2 className='column column-75'>Elo</h2>
-
-          <div className='column column-25'>
-            <YearSelect
-              onChange={year => this.update(year)}
-            />
+            <div className='column column-25'>
+              <YearSelect
+                onChange={year => this.update(year)}
+              />
+            </div>
           </div>
-        </div>
 
-        <EloTable
-          ratings={this.state.ratings}
-        />
-      </div>
+          <EloTable ratings={this.state.ratings} />
+        </section>
+      </main>
     )
   }
 }

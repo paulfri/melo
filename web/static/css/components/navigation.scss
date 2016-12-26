@@ -1,0 +1,27 @@
+nav.navigation {
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  z-index: 1;
+
+  background-color: $backgroundColor;
+  height: $headerHeight;
+  max-width: 100%;
+  width: 100%;
+  padding-top: 1.5rem;
+
+  border-bottom: .1rem solid #d1d1d1;
+
+  ul {
+    list-style: none;
+  }
+
+  li {
+    display: inline-block;
+
+    &:not(:last-child) {
+      margin-right: 5rem;
+    }
+  }
+}

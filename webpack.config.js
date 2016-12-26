@@ -6,7 +6,7 @@ const CopyWebpackPlugin = require('copy-webpack-plugin')
 module.exports = {
   entry: [
     './js/app.js',
-    './css/app.css'
+    './css/app.scss'
   ],
   output: {
     filename: 'js/app.js',
@@ -24,11 +24,15 @@ module.exports = {
         exclude: /node_modules/
       },
       {
-        test: /\.css$/,
-        loader: ExtractTextPlugin.extract({
-          fallbackLoader: 'style-loader',
-          loader: 'css-loader'
-        })
+        test: /\.scss$/,
+        loader: [
+          ExtractTextPlugin.extract({
+            fallbackLoader: 'style-loader',
+            loader: 'css-loader'
+          }),
+          'css-loader',
+          'sass-loader'
+        ]
       }
     ]
   },
