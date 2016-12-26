@@ -23,6 +23,8 @@ defmodule Melo.Router do
     pipe_through :browser
 
     get "/", PageController, :index
+    get "/elo", PageController, :index
+    get "/standings", PageController, :index
   end
 
   scope "/api", Melo do

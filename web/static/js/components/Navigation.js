@@ -1,13 +1,14 @@
 import React from 'react'
+import { Link } from 'react-router'
 
 const Navigation = () => (
   <nav className='navigation'>
     <section className='container'>
-      Melo
+      <Link to={`/`}>Melo</Link>
 
       <ul className='float-right'>
-        <li>Standings</li>
-        <li>Elo</li>
+        <li><Link to={`/standings`}>Standings</Link></li>
+        <li><Link to={`/elo`}>Elo</Link></li>
       </ul>
     </section>
   </nav>

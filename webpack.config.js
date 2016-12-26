@@ -14,6 +14,12 @@ module.exports = {
   },
   context: resolve(__dirname, 'web', 'static'),
   devtool: 'inline-source-map',
+  resolve: {
+    modules: [
+      resolve(__dirname, 'web', 'static', 'js'),
+      resolve(__dirname, 'node_modules')
+    ]
+  },
   module: {
     rules: [
       {
