@@ -1,4 +1,5 @@
 import React from 'react'
+import { browserHistory } from 'react-router'
 import EloTable from 'components/EloTable'
 import YearSelect from 'components/YearSelect'
 
@@ -11,7 +12,7 @@ export default class Elo extends React.Component {
     }
   }
 
-  componentDidMount = () => this.update(2016)
+  componentDidMount = () => this.update(this.props.params.year || 2016)
 
   handleChange = event => this.update(event.target.value)
 
@@ -19,6 +20,7 @@ export default class Elo extends React.Component {
     fetch(`/api/elo?year=${year}`)
       .then(response => response.json())
       .then(data => this.setState({ratings: data}))
+      .then(() => browserHistory.push(`/elo/${year}`))
   }
 
   render () {
@@ -30,6 +32,7 @@ export default class Elo extends React.Component {
           <div className='column column-25'>
             <YearSelect
               onChange={year => this.update(year)}
+              selected={this.props.params.year}
             />
           </div>
         </div>

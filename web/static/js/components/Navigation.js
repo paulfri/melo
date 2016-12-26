@@ -1,14 +1,14 @@
 import React from 'react'
-import { Link } from 'react-router'
+import NavLink from 'components/NavLink'
 
 const Navigation = () => (
   <nav className='navigation'>
     <section className='container'>
-      <Link to={`/`}>Melo</Link>
+      <NavLink to='/'>Melo</NavLink>
 
       <ul className='float-right'>
-        <li><Link to={`/standings`}>Standings</Link></li>
-        <li><Link to={`/elo`}>Elo</Link></li>
+        <li><NavLink to='/standings'>Standings</NavLink></li>
+        <li><NavLink to='/elo'>Elo</NavLink></li>
       </ul>
     </section>
   </nav>

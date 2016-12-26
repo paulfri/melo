@@ -11,10 +11,12 @@ const NoMatch = () => (
 
 const App = () => (
   <Router history={browserHistory}>
-    <Route path="/" component={Melo}>
-      <Route path="/elo" component={Elo} />
-      <Route path="/standings" component={Standings} />
-      <Route path="*" component={NoMatch} />
+    <Route path='/' component={Melo}>
+      <Route path='/elo' component={Elo} />
+      <Route path='/elo/:year' component={Elo} />
+      <Route path='/standings' component={Standings} />
+      <Route path='/standings/:year' component={Standings} />
+      <Route path='*' component={NoMatch} />
     </Route>
   </Router>
 )
