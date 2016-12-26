@@ -25,7 +25,15 @@ export default class Melo extends React.Component {
     return (
       <div className='container'>
         <div className='row'>
-          <div className='column column-25 column-offset-75'>
+          <h1 className='column'>Melo</h1>
+        </div>
+
+        <hr />
+
+        <div className='row'>
+          <h2 className='column column-75'>Elo</h2>
+
+          <div className='column column-25'>
             <YearSelect
               onChange={year => this.update(year)}
             />

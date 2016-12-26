@@ -23,4 +23,8 @@ defmodule Melo.TeamSeason do
   def name(team_season) do
     team_season.alias || team_season.team.name
   end
+
+  def abbreviation(team_season) do
+    team_season.alias_abbreviation || team_season.team.abbreviation
+  end
 end

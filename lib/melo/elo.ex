@@ -4,7 +4,7 @@ defmodule Melo.Elo do
   """
 
   @default_elo_rating 1500
-  @default_k_factor 20
+  @default_k_factor 35
 
   import Ecto.Query, only: [from: 2]
 
@@ -51,6 +51,7 @@ defmodule Melo.Elo do
       team_season = Enum.find(team_seasons, fn ts -> ts.team.abbreviation == a end)
 
       %{team: team_season.team,
+        team_season: team_season,
         rating: rating}
     end)
     |> Enum.sort_by(fn %{rating: rating} -> rating end)
