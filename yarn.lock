@@ -46,6 +46,10 @@ alphanum-sort@^1.0.1, alphanum-sort@^1.0.2:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/alphanum-sort/-/alphanum-sort-1.0.2.tgz#97a1119649b211ad33691d9f9f486a8ec9fbe0a3"
 
+amdefine@>=0.0.4:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/amdefine/-/amdefine-1.0.1.tgz#4a5282ac164729e93619bcfd3ad151f817ce91f5"
+
 ansi-regex@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/ansi-regex/-/ansi-regex-2.0.0.tgz#c5061b6e0ef8a81775e50f5d66151bf6bf371107"
@@ -1502,6 +1506,13 @@ expand-range@^1.8.1:
   dependencies:
     fill-range "^2.1.0"
 
+exports-loader@^0.6.3:
+  version "0.6.3"
+  resolved "https://registry.yarnpkg.com/exports-loader/-/exports-loader-0.6.3.tgz#57dc78917f709b96f247fa91e69b554c855013c8"
+  dependencies:
+    loader-utils "0.2.x"
+    source-map "0.1.x"
+
 express@^4.13.3:
   version "4.14.0"
   resolved "https://registry.yarnpkg.com/express/-/express-4.14.0.tgz#c1ee3f42cdc891fb3dc650a8922d51ec847d0d66"
@@ -1906,6 +1917,13 @@ ieee754@^1.1.4:
   version "1.1.8"
   resolved "https://registry.yarnpkg.com/ieee754/-/ieee754-1.1.8.tgz#be33d40ac10ef1926701f6f08a2d86fbfd1ad3e4"
 
+imports-loader@^0.7.0:
+  version "0.7.0"
+  resolved "https://registry.yarnpkg.com/imports-loader/-/imports-loader-0.7.0.tgz#468c04de8075941cfab28146c755c24cc1f36ccd"
+  dependencies:
+    loader-utils "^0.2.16"
+    source-map "^0.5.6"
+
 indexes-of@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/indexes-of/-/indexes-of-1.0.1.tgz#f30f716c8e2bd346c7b67d3df3915566a7c05607"
@@ -2208,7 +2226,7 @@ loader-runner@^2.2.0:
   version "2.2.0"
   resolved "https://registry.yarnpkg.com/loader-runner/-/loader-runner-2.2.0.tgz#824c1b699c4e7a2b6501b85902d5b862bf45b3fa"
 
-loader-utils@^0.2.11, loader-utils@^0.2.15, loader-utils@^0.2.16, loader-utils@^0.2.3, loader-utils@^0.2.7, loader-utils@~0.2.2:
+loader-utils@0.2.x, loader-utils@^0.2.11, loader-utils@^0.2.15, loader-utils@^0.2.16, loader-utils@^0.2.3, loader-utils@^0.2.7, loader-utils@~0.2.2:
   version "0.2.16"
   resolved "https://registry.yarnpkg.com/loader-utils/-/loader-utils-0.2.16.tgz#f08632066ed8282835dff88dfb52704765adee6d"
   dependencies:
@@ -3289,6 +3307,12 @@ source-map-support@^0.4.2:
   dependencies:
     source-map "^0.5.3"
 
+source-map@0.1.x:
+  version "0.1.43"
+  resolved "https://registry.yarnpkg.com/source-map/-/source-map-0.1.43.tgz#c24bc146ca517c1471f5dacbe2571b2b7f9e3346"
+  dependencies:
+    amdefine ">=0.0.4"
+
 source-map@^0.5.0, source-map@^0.5.3, source-map@^0.5.6, source-map@~0.5.1, source-map@~0.5.3:
   version "0.5.6"
   resolved "https://registry.yarnpkg.com/source-map/-/source-map-0.5.6.tgz#75ce38f52bf0733c5a7f0c118d81334a2bb5f412"
@@ -3694,7 +3718,7 @@ websocket-extensions@>=0.1.1:
   version "0.1.1"
   resolved "https://registry.yarnpkg.com/websocket-extensions/-/websocket-extensions-0.1.1.tgz#76899499c184b6ef754377c2dbb0cd6cb55d29e7"
 
-whatwg-fetch@>=0.10.0:
+whatwg-fetch@>=0.10.0, whatwg-fetch@^2.0.1:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/whatwg-fetch/-/whatwg-fetch-2.0.1.tgz#078b9461bbe91cea73cbce8bb122a05f9e92b772"
 

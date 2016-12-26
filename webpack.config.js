@@ -35,6 +35,9 @@ module.exports = {
   plugins: [
     new webpack.NamedModulesPlugin(),
     new ExtractTextPlugin('css/app.css'),
-    new CopyWebpackPlugin([{ from: "./assets" }])
+    new CopyWebpackPlugin([{ from: "./assets" }]),
+    new webpack.ProvidePlugin({
+      fetch: 'imports-loader?this=>global!exports-loader?global.fetch!whatwg-fetch'
+    })
   ]
 }
