@@ -15,6 +15,7 @@
           "modules": false
         }
       ],
+      "stage-2",
       "react"
     ]
   },
@@ -24,6 +25,7 @@
     "babel-loader": "^6.2.10",
     "babel-preset-latest": "^6.16.0",
     "babel-preset-react": "^6.16.0",
+    "babel-preset-stage-2": "^6.18.0",
     "copy-webpack-plugin": "^4.0.1",
     "css-loader": "^0.26.1",
     "extract-text-webpack-plugin": "^2.0.0-beta",

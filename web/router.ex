@@ -31,5 +31,6 @@ defmodule Melo.Router do
     resources "/matches", MatchController, only: [:index, :show]
     resources "/teams", TeamController, only: [:index, :show]
     resources "/seasons", SeasonController, only: [:index, :show]
+    resources "/elo", EloController, only: [:index]
   end
 end

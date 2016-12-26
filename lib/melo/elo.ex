@@ -41,9 +41,19 @@ defmodule Melo.Elo do
       ])
     end)
 
-    # sort the final ratings
+    # return sorted, in format: %{ team: Team, rating: 123 }
     new_ratings
-    |> Enum.sort_by(fn {_, rating} -> rating end)
+    |> Enum.map(fn({abbrev, rating}) ->
+      a = abbrev
+      |> Atom.to_string
+      |> String.upcase
+
+      team_season = Enum.find(team_seasons, fn ts -> ts.team.abbreviation == a end)
+
+      %{team: team_season.team,
+        rating: rating}
+    end)
+    |> Enum.sort_by(fn %{rating: rating} -> rating end)
     |> Enum.reverse
   end
 
