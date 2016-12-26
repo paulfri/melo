@@ -50,8 +50,7 @@ defmodule Melo.Elo do
 
       team_season = Enum.find(team_seasons, fn ts -> ts.team.abbreviation == a end)
 
-      %{team: team_season.team,
-        team_season: team_season,
+      %{team_season: team_season,
         rating: rating}
     end)
     |> Enum.sort_by(fn %{rating: rating} -> rating end)
