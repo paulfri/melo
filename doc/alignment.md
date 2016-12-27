@@ -1,4 +1,4 @@
-# MLS Conference Alignments, 1996-present
+# Expansions, contractions and conference alignments
 
 ## 1996
 ### Eastern Conference
