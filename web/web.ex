@@ -20,6 +20,7 @@ defmodule Melo.Web do
     quote do
       use Ecto.Schema
 
+      alias Melo.Repo
       import Ecto
       import Ecto.Changeset
       import Ecto.Query

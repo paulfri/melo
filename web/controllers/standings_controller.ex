@@ -1,10 +1,11 @@
 defmodule Melo.StandingsController do
+  alias Melo.Standings
   use Melo.Web, :controller
 
   def index(conn, %{"year" => year, "type" => type}) do
     {year, _} = Integer.parse(year)
 
-    standings = Melo.Standings.season(year, type)
+    standings = Standings.season(year, type)
 
     render(conn, "index.json", standings: standings)
   end

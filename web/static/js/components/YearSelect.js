@@ -1,4 +1,4 @@
-import React, { PropType } from 'react'
+import React, { PropTypes } from 'react'
 
 const YearSelect = ({onChange, selected}) => (
   <select onChange={e => onChange(e.target.value)} defaultValue={parseInt(selected, 10)}>
@@ -10,8 +10,8 @@ const YearSelect = ({onChange, selected}) => (
 )
 
 YearSelect.propTypes = {
-  onChange: PropType.func.isRequired,
-  selected: PropType.string.isRequired
+  onChange: PropTypes.func.isRequired,
+  selected: PropTypes.string.isRequired
 }
 
 export default YearSelect

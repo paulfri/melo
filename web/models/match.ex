@@ -1,5 +1,6 @@
 defmodule Melo.Match do
   use Melo.Web, :model
+  alias Ecto.Date
 
   schema "matches" do
     field :home_score, :integer
@@ -18,5 +19,24 @@ defmodule Melo.Match do
     struct
     |> cast(params, [:home_score, :away_score, :date])
     |> validate_required([:home_score, :away_score, :date])
+  end
+
+  @doc """
+  Returns all the matches in a given season.
+  """
+  @lint {Credo.Check.Refactor.PipeChainStart, false}
+  def season(year) do
+    start_date = Date.from_erl({year, 1, 1})
+    end_date = Date.from_erl({year + 1, 1, 1})
+
+    Repo.all(
+      from m in Melo.Match,
+      where: m.date >= ^start_date,
+      where: m.date <  ^end_date
+    )
+    |> Repo.preload(:home)
+    |> Repo.preload(home: :team)
+    |> Repo.preload(:away)
+    |> Repo.preload(away: :team)
   end
 end

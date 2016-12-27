@@ -1,4 +1,5 @@
 defmodule Melo.StandingsView do
+  alias Melo.TeamSeasonView
   use Melo.Web, :view
 
   def render("index.json", %{standings: standings}) do
@@ -8,7 +9,8 @@ defmodule Melo.StandingsView do
   def render("show.json", %{standings: standings}) do
     %{title: standings.title,
       standings: Enum.map(standings.standings, fn data ->
-        %{team: Melo.TeamSeasonView.render("team_season.json", team_season: data.team_season),
+        %{team: TeamSeasonView.render(
+            "team_season.json", team_season: data.team_season),
           games_played: data.games_played,
           points: data.points,
           wins: data.wins,

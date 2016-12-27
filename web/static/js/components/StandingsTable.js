@@ -1,4 +1,4 @@
-import React, { PropType } from 'react'
+import React, { PropTypes } from 'react'
 
 const StandingsTable = ({title, standings}) => (
   <section>
@@ -63,25 +63,25 @@ const StandingsTable = ({title, standings}) => (
 )
 
 StandingsTable.propTypes = {
-  title: PropType.string.isRequired,
-  standings: PropType.arrayOf(PropType.shape({
-    team: PropType.shape({
-      name: PropType.string.isRequired,
-      abbreviation: PropType.string.isRequired
+  title: PropTypes.string.isRequired,
+  standings: PropTypes.arrayOf(PropTypes.shape({
+    team: PropTypes.shape({
+      name: PropTypes.string.isRequired,
+      abbreviation: PropTypes.string.isRequired
     }).isRequired,
-    points: PropType.number.isRequired,
-    games_played: PropType.number.isRequired,
-    wins: PropType.number.isRequired,
-    losses: PropType.number.isRequired,
-    draws: PropType.number.isRequired,
-    home_wins: PropType.number.isRequired,
-    home_losses: PropType.number.isRequired,
-    home_draws: PropType.number.isRequired,
-    away_wins: PropType.number.isRequired,
-    away_losses: PropType.number.isRequired,
-    away_draws: PropType.number.isRequired,
-    goals_for: PropType.number.isRequired,
-    goals_against: PropType.number.isRequired
+    points: PropTypes.number.isRequired,
+    games_played: PropTypes.number.isRequired,
+    wins: PropTypes.number.isRequired,
+    losses: PropTypes.number.isRequired,
+    draws: PropTypes.number.isRequired,
+    home_wins: PropTypes.number.isRequired,
+    home_losses: PropTypes.number.isRequired,
+    home_draws: PropTypes.number.isRequired,
+    away_wins: PropTypes.number.isRequired,
+    away_losses: PropTypes.number.isRequired,
+    away_draws: PropTypes.number.isRequired,
+    goals_for: PropTypes.number.isRequired,
+    goals_against: PropTypes.number.isRequired
   }))
 }
 

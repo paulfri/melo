@@ -5,9 +5,10 @@ defmodule Melo.Standings do
   database.
   """
 
-  defstruct title: nil, standings: []
+  alias Melo.Match
+  alias Melo.TeamSeason
 
-  import Ecto.Query, only: [from: 2]
+  defstruct title: nil, standings: []
 
   defmodule StandingsEntry do
     defstruct team_season: nil, games_played: 0, points: 0, wins: 0, losses: 0,
@@ -16,12 +17,14 @@ defmodule Melo.Standings do
   end
 
   @doc """
-  Get the standings for a given MLS season.
+  Get the standings for a given MLS season. Returns a list of the requested
+  standings type (league, division).
   """
   def season(year, type \\ "league") do
-    matches = retrieve_matches(year)
+    matches = Match.season(year)
 
-    standings = retrieve_team_seasons(year)
+    standings = year
+    |> TeamSeason.season
     |> Enum.map(fn ts -> %StandingsEntry{team_season: ts} end)
 
     case type do
@@ -31,7 +34,8 @@ defmodule Melo.Standings do
   end
 
   @doc """
-  Get standings for the league over a set of matches.
+  Get standings for the league over a set of matches. Returns a one-element
+  list with a `Standings` struct.
   """
   def league_standings(team_seasons, matches) do
     standings = matches
@@ -77,9 +81,11 @@ defmodule Melo.Standings do
     away_index = standings
     |> Enum.find_index(fn entry -> entry.team_season.id == match.away.id end)
 
-    home_entry = Enum.at(standings, home_index)
+    home_entry = standings
+    |> Enum.at(home_index)
     |> update_standings_entry(match.home_score, match.away_score, true)
-    away_entry = Enum.at(standings, away_index)
+    away_entry = standings
+    |> Enum.at(away_index)
     |> update_standings_entry(match.away_score, match.home_score, false)
 
     standings
@@ -93,65 +99,42 @@ defmodule Melo.Standings do
     struct(entry, %{
       games_played: entry.games_played + 1,
       points: entry.points + calculate_points(result),
-      wins: (entry.wins + if result == :win, do: 1, else: 0),
-      losses: (entry.losses + if result == :loss, do: 1, else: 0),
-      draws: (entry.draws + if result == :draw, do: 1, else: 0),
-      home_wins: (entry.home_wins + if result == :win && home, do: 1, else: 0),
-      home_losses: (entry.home_losses + if result == :loss && home, do: 1, else: 0),
-      home_draws: (entry.home_draws + if result == :draw && home, do: 1, else: 0),
-      away_wins: (entry.away_wins + if result == :win && !home, do: 1, else: 0),
-      away_losses: (entry.away_losses + if result == :loss && !home, do: 1, else: 0),
-      away_draws: (entry.away_draws + if result == :draw && !home, do: 1, else: 0),
       goals_for: entry.goals_for + score,
-      goals_against: entry.goals_against + opponent_score
+      goals_against: entry.goals_against + opponent_score,
+      wins:
+        (entry.wins + if result == :win, do: 1, else: 0),
+      losses:
+        (entry.losses + if result == :loss, do: 1, else: 0),
+      draws:
+        (entry.draws + if result == :draw, do: 1, else: 0),
+      home_wins:
+        (entry.home_wins + if result == :win && home, do: 1, else: 0),
+      home_losses:
+        (entry.home_losses + if result == :loss && home, do: 1, else: 0),
+      home_draws:
+        (entry.home_draws + if result == :draw && home, do: 1, else: 0),
+      away_wins:
+        (entry.away_wins + if result == :win && !home, do: 1, else: 0),
+      away_losses:
+        (entry.away_losses + if result == :loss && !home, do: 1, else: 0),
+      away_draws:
+        (entry.away_draws + if result == :draw && !home, do: 1, else: 0)
     })
   end
 
   defp calculate_result(score, opponent_score) do
     cond do
-      score > opponent_score ->
-        :win
-      score < opponent_score ->
-        :loss
-      true ->
-        :draw
+      score > opponent_score -> :win
+      score < opponent_score -> :loss
+      true                   -> :draw
     end
   end
 
-  # TODO: account for shootouts pre-2001
   defp calculate_points(result) do
     case result do
       :win  -> 3
       :loss -> 0
       :draw -> 1
     end
-  end
-
-  defp retrieve_team_seasons(year) do
-    Melo.Repo.all(
-      from ts in Melo.TeamSeason,
-      join: d in Melo.Division, where: ts.division_id == d.id,
-      join: s in Melo.Season, where: s.id == d.season_id,
-      join: t in Melo.Team, where: ts.team_id == t.id,
-      where: s.year == ^year,
-      select: ts
-    )
-    |> Melo.Repo.preload(:team)
-    |> Melo.Repo.preload(:division)
-  end
-
-  defp retrieve_matches(year) do
-    {:ok, start_date} = Date.from_erl({year, 1, 1})
-    {:ok, end_date} = Date.from_erl({year + 1, 1, 1})
-
-    Melo.Repo.all(
-      from m in Melo.Match,
-      where: m.date >= ^start_date,
-      where: m.date <  ^end_date
-    )
-    |> Melo.Repo.preload(:home)
-    |> Melo.Repo.preload(home: :team)
-    |> Melo.Repo.preload(:away)
-    |> Melo.Repo.preload(away: :team)
   end
 end

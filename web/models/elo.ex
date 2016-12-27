@@ -3,10 +3,11 @@ defmodule Melo.Elo do
   Functions for retrieving Elo rating data for results in the Melo database.
   """
 
+  alias Melo.Match
+  alias Melo.TeamSeason
+
   @default_elo_rating 1500
   @default_k_factor 35
-
-  import Ecto.Query, only: [from: 2]
 
   @doc """
   Get the Elo ratings for a given MLS season.
@@ -14,17 +15,14 @@ defmodule Melo.Elo do
   Returns a map with `team_season` and `rating` keys.
   """
   def season(year) do
-    # load all the team_seasons from db
-    team_seasons = retrieve_team_seasons(year)
+    team_seasons = TeamSeason.season(year)
+    matches = Match.season(year)
 
     # assign default rating to each team
     ratings = Enum.zip(
       Enum.map(team_seasons, &key/1),
       (for _ <- 1..20, do: @default_elo_rating)
     )
-
-    # load all matches from db
-    matches = retrieve_matches(year)
 
     # iterate through matches and track team ratings in the accumulator
     new_ratings = Enum.reduce(matches, ratings, fn(match, new_ratings) ->
@@ -47,40 +45,15 @@ defmodule Melo.Elo do
       |> Atom.to_string
       |> String.upcase
 
-      team_season = Enum.find(team_seasons, fn ts -> ts.team.abbreviation == a end)
+      team_season = Enum.find(team_seasons, fn ts ->
+        ts.team.abbreviation == a
+      end)
 
       %{team_season: team_season,
         rating: rating}
     end)
     |> Enum.sort_by(fn %{rating: rating} -> rating end)
     |> Enum.reverse
-  end
-
-  defp retrieve_team_seasons(year) do
-    Melo.Repo.all(
-      from ts in Melo.TeamSeason,
-      join: d in Melo.Division, where: ts.division_id == d.id,
-      join: s in Melo.Season, where: s.id == d.season_id,
-      join: t in Melo.Team, where: ts.team_id == t.id,
-      where: s.year == ^year,
-      select: ts
-    )
-    |> Melo.Repo.preload(:team)
-  end
-
-  defp retrieve_matches(year) do
-    {:ok, start_date} = Date.from_erl({year, 1, 1})
-    {:ok, end_date} = Date.from_erl({year + 1, 1, 1})
-
-    Melo.Repo.all(
-      from m in Melo.Match,
-      where: m.date >= ^start_date,
-      where: m.date <  ^end_date
-    )
-    |> Melo.Repo.preload(:home)
-    |> Melo.Repo.preload(home: :team)
-    |> Melo.Repo.preload(:away)
-    |> Melo.Repo.preload(away: :team)
   end
 
   defp key(team_season) do
