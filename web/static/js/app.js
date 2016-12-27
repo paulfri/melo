@@ -4,10 +4,7 @@ import { Router, Route, browserHistory } from 'react-router'
 import Melo from 'Melo'
 import Elo from 'pages/Elo'
 import Standings from 'pages/Standings'
-
-const NoMatch = () => (
-  <main>not found!!!</main>
-)
+import NoMatch from 'NoMatch'
 
 const App = () => (
   <Router history={browserHistory}>
