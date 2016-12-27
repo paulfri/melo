@@ -4,8 +4,6 @@ const StandingsTable = ({title, standings}) => (
   <section>
     <h3>{title}</h3>
 
-    <p>Standings prior to the 2000 season aren't accurate yet.</p>
-
     <table className="standings">
       <thead>
         <tr>

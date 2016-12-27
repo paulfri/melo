@@ -5,6 +5,8 @@ defmodule Melo.Standings do
   database.
   """
 
+  defstruct title: nil, standings: []
+
   import Ecto.Query, only: [from: 2]
 
   defmodule StandingsEntry do
@@ -16,22 +18,64 @@ defmodule Melo.Standings do
   @doc """
   Get the standings for a given MLS season.
   """
-  def season(year) do
-    standings = retrieve_team_seasons(year)
-    |> Enum.map(fn team_season -> %StandingsEntry{team_season: team_season} end)
+  def season(year, type \\ "league") do
+    matches = retrieve_matches(year)
 
-    retrieve_matches(year)
-    |> Enum.reduce(standings, &generate_standings/2)
+    standings = retrieve_team_seasons(year)
+    |> Enum.map(fn ts -> %StandingsEntry{team_season: ts} end)
+
+    case type do
+      "league" -> league_standings(standings, matches)
+      "division" -> division_standings(standings, matches)
+    end
+  end
+
+  @doc """
+  Get standings for the league over a set of matches.
+  """
+  def league_standings(team_seasons, matches) do
+    standings = matches
+    |> Enum.reduce(team_seasons, &generate_standings/2)
     |> Enum.sort_by(fn entry -> entry.points end)
     |> Enum.reverse
+
+    [%Melo.Standings{title: "League", standings: standings}]
+  end
+
+  @doc """
+  Get standings ordered by division. Similar to `league_standings/2` but the
+  returns a list of `Standings` structs with the division names as titles.
+  """
+  def division_standings(team_seasons, matches) do
+    # TODO: this whole thing should be better
+
+    List.first(league_standings(team_seasons, matches)).standings
+    |> Enum.reduce([], fn (standings_entry, acc) ->
+      division_title = standings_entry.team_season.division.name
+      index = Enum.find_index(acc, fn st -> st.title == division_title end)
+
+      if index == nil do
+        [%Melo.Standings{
+          title: division_title,
+          standings: [standings_entry]
+        } | acc]
+      else
+        standings = Enum.at(acc, index)
+
+        List.replace_at(acc, index, %Melo.Standings{
+          title: standings.title,
+          standings: Enum.concat(standings.standings, [standings_entry])
+        })
+      end
+    end)
   end
 
   # returns new standings with the given match included
   defp generate_standings(match, standings) do
     home_index = standings
-    |> Enum.find_index(fn stats -> stats.team_season == match.home end)
+    |> Enum.find_index(fn entry -> entry.team_season.id == match.home.id end)
     away_index = standings
-    |> Enum.find_index(fn stats -> stats.team_season == match.away end)
+    |> Enum.find_index(fn entry -> entry.team_season.id == match.away.id end)
 
     home_entry = Enum.at(standings, home_index)
     |> update_standings_entry(match.home_score, match.away_score, true)
@@ -49,15 +93,15 @@ defmodule Melo.Standings do
     struct(entry, %{
       games_played: entry.games_played + 1,
       points: entry.points + calculate_points(result),
-      wins: (entry.wins + if (result == :win), do: 1, else: 0),
-      losses: (entry.losses + if (result == :loss), do: 1, else: 0),
-      draws: (entry.draws + if (result == :draw), do: 1, else: 0),
-      home_wins: (entry.home_wins + if (result == :win && home), do: 1, else: 0),
-      home_losses: (entry.home_losses + if (result == :loss && home), do: 1, else: 0),
-      home_draws: (entry.home_draws + if (result == :draw && home), do: 1, else: 0),
-      away_wins: (entry.away_wins + if (result == :win && !home), do: 1, else: 0),
-      away_losses: (entry.away_losses + if (result == :loss && !home), do: 1, else: 0),
-      away_draws: (entry.away_draws + if (result == :draw && !home), do: 1, else: 0),
+      wins: (entry.wins + if result == :win, do: 1, else: 0),
+      losses: (entry.losses + if result == :loss, do: 1, else: 0),
+      draws: (entry.draws + if result == :draw, do: 1, else: 0),
+      home_wins: (entry.home_wins + if result == :win && home, do: 1, else: 0),
+      home_losses: (entry.home_losses + if result == :loss && home, do: 1, else: 0),
+      home_draws: (entry.home_draws + if result == :draw && home, do: 1, else: 0),
+      away_wins: (entry.away_wins + if result == :win && !home, do: 1, else: 0),
+      away_losses: (entry.away_losses + if result == :loss && !home, do: 1, else: 0),
+      away_draws: (entry.away_draws + if result == :draw && !home, do: 1, else: 0),
       goals_for: entry.goals_for + score,
       goals_against: entry.goals_against + opponent_score
     })
@@ -93,6 +137,7 @@ defmodule Melo.Standings do
       select: ts
     )
     |> Melo.Repo.preload(:team)
+    |> Melo.Repo.preload(:division)
   end
 
   defp retrieve_matches(year) do

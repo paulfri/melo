@@ -17,7 +17,7 @@ export default class Elo extends React.Component {
   handleChange = event => this.update(event.target.value)
 
   update = year => {
-    fetch(`/api/standings?year=${year}`)
+    fetch(`/api/standings?year=${year}&type=division`)
       .then(response => response.json())
       .then(data => this.setState({standings: data}))
       .then(() => browserHistory.push(`/standings/${year}`))
@@ -37,10 +37,18 @@ export default class Elo extends React.Component {
           </div>
         </div>
 
-        <StandingsTable
-          title={"Supporters' Shield"}
-          standings={this.state.standings}
-        />
+        <p>
+          Standings prior to the 2000 season aren't accurate yet.
+          Tiebreakers also aren't taken into account.
+        </p>
+
+        {this.state.standings.map(st => (
+          <StandingsTable
+            key={st.title}
+            title={st.title}
+            standings={st.standings}
+          />
+        ))}
       </section>
     )
   }
