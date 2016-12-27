@@ -1,0 +1,9 @@
+.standings {
+  &__super-head {
+    text-align: center;
+
+    &--empty {
+      border-bottom: none;
+    }
+  }
+}

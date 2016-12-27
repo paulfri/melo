@@ -26,12 +26,13 @@ defmodule Melo.Router do
     resources "/teams", TeamController, only: [:index, :show]
     resources "/seasons", SeasonController, only: [:index, :show]
     resources "/elo", EloController, only: [:index]
+    resources "/standings", StandingsController, only: [:index]
   end
 
   scope "/", Melo do
     pipe_through :browser
 
     get "/", PageController, :index
-    get "*path", PageController, :index
+    get "/*path", PageController, :index
   end
 end

@@ -11,8 +11,7 @@ defmodule Melo.Elo do
   @doc """
   Get the Elo ratings for a given MLS season.
 
-  Returns a sorted keyword list, keyed by team abbreviation, with the team's
-  Elo rating for that season as the value.
+  Returns a map with `team_season` and `rating` keys.
   """
   def season(year) do
     # load all the team_seasons from db
