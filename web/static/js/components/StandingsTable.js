@@ -1,18 +1,18 @@
-import React, { PropTypes } from 'react'
+import React, { PropType } from 'react'
 
 const StandingsTable = ({title, standings}) => (
   <section>
     <h3>{title}</h3>
 
-    <table className="standings">
+    <table className='standings'>
       <thead>
         <tr>
-          <th colSpan="2" className="standings__super-head--empty"></th>
-          <th colSpan="2" className="standings__super-head">Points</th>
-          <th colSpan="4" className="standings__super-head--empty"></th>
-          <th colSpan="3" className="standings__super-head">Home</th>
-          <th colSpan="3" className="standings__super-head">Away</th>
-          <th colSpan="3" className="standings__super-head--empty"></th>
+          <th colSpan='2' className='standings__super-head--empty' />
+          <th colSpan='2' className='standings__super-head'>Points</th>
+          <th colSpan='4' className='standings__super-head--empty' />
+          <th colSpan='3' className='standings__super-head'>Home</th>
+          <th colSpan='3' className='standings__super-head'>Away</th>
+          <th colSpan='3' className='standings__super-head--empty' />
         </tr>
         <tr>
           <th>Rank</th>
@@ -61,5 +61,28 @@ const StandingsTable = ({title, standings}) => (
     </table>
   </section>
 )
+
+StandingsTable.propTypes = {
+  title: PropType.string.isRequired,
+  standings: PropType.arrayOf(PropType.shape({
+    team: PropType.shape({
+      name: PropType.string.isRequired,
+      abbreviation: PropType.string.isRequired
+    }).isRequired,
+    points: PropType.number.isRequired,
+    games_played: PropType.number.isRequired,
+    wins: PropType.number.isRequired,
+    losses: PropType.number.isRequired,
+    draws: PropType.number.isRequired,
+    home_wins: PropType.number.isRequired,
+    home_losses: PropType.number.isRequired,
+    home_draws: PropType.number.isRequired,
+    away_wins: PropType.number.isRequired,
+    away_losses: PropType.number.isRequired,
+    away_draws: PropType.number.isRequired,
+    goals_for: PropType.number.isRequired,
+    goals_against: PropType.number.isRequired
+  }))
+}
 
 export default StandingsTable

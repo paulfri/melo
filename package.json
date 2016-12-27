@@ -6,7 +6,8 @@
   "license": "MIT",
   "scripts": {
     "start": "webpack --watch-stdin --progress --color",
-    "deploy": "webpack -p --config webpack.config.prod.js"
+    "deploy": "webpack -p --config webpack.config.prod.js",
+    "eslint": "eslint web/static/js"
   },
   "babel": {
     "presets": [
@@ -19,6 +20,16 @@
       "stage-2",
       "react"
     ]
+  },
+  "eslintConfig": {
+    "parser": "babel-eslint",
+    "extends": [
+      "standard",
+      "standard-react"
+    ],
+    "env": {
+      "browser": true
+    }
   },
   "dependencies": {
     "babel": "^6.5.2",
@@ -42,7 +53,15 @@
     "sass-loader": "^4.1.1",
     "style-loader": "^0.13.1",
     "webpack": "2.2.0-rc.2",
-    "webpack-dev-server": "2.2.0-rc.0",
     "whatwg-fetch": "^2.0.1"
+  },
+  "devDependencies": {
+    "babel-eslint": "^7.1.1",
+    "eslint": "^3.12.2",
+    "eslint-config-standard": "^6.2.1",
+    "eslint-config-standard-react": "^4.2.0",
+    "eslint-plugin-promise": "^3.4.0",
+    "eslint-plugin-react": "^6.8.0",
+    "eslint-plugin-standard": "^2.0.1"
   }
 }

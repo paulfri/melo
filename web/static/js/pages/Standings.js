@@ -1,10 +1,14 @@
-import React from 'react'
+import React, { PropType } from 'react'
 import { browserHistory } from 'react-router'
 import StandingsTable from 'components/StandingsTable'
 import YearSelect from 'components/YearSelect'
 
 export default class Elo extends React.Component {
-  constructor(props) {
+  static propTypes = {
+    params: PropType.array.isRequired
+  }
+
+  constructor (props) {
     super()
 
     this.state = {

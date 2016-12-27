@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { PropType } from 'react'
 import Navigation from 'components/Navigation'
 
 const Melo = ({children = undefined}) => (
@@ -8,5 +8,9 @@ const Melo = ({children = undefined}) => (
     {children}
   </main>
 )
+
+Melo.propTypes = {
+  children: PropType.array
+}
 
 export default Melo
