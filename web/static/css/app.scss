@@ -1,5 +1,6 @@
+@import 'color';
 @import '~normalize.css';
-@import '~milligram';
+@import '~milligram-scss';
 
 $backgroundColor: rgba(255, 255, 255, 1);
 $headerHeight: 6rem;
@@ -22,5 +23,9 @@ main {
   margin-top: $headerHeight + 2rem;
 }
 
+// components
 @import 'components/navigation';
+@import 'components/buttons';
+
+// pages
 @import 'components/standings';

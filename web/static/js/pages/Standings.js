@@ -2,18 +2,15 @@ import React, { PropTypes } from 'react'
 import { browserHistory } from 'react-router'
 import StandingsTable from 'components/StandingsTable'
 import YearSelect from 'components/YearSelect'
+import Button from 'components/Button'
 
 export default class Elo extends React.Component {
   static propTypes = {
     params: PropTypes.object.isRequired
   }
 
-  constructor (props) {
-    super()
-
-    this.state = {
-      standings: []
-    }
+  state = {
+    standings: []
   }
 
   componentDidMount = () => this.update(this.props.params.year || 2016)
@@ -31,9 +28,15 @@ export default class Elo extends React.Component {
     return (
       <section className='container'>
         <div className='row'>
-          <h2 className='column column-75'>Standings</h2>
+          <h2 className='column'>Standings</h2>
 
-          <div className='column column-25'>
+          <div className='button-group column'>
+            <Button active size='small'>Playoffs</Button>
+            <Button size='small'>League</Button>
+            <Button size='small'>Results</Button>
+          </div>
+
+          <div className='column column-20'>
             <YearSelect
               onChange={year => this.update(year)}
               selected={this.props.params.year}
